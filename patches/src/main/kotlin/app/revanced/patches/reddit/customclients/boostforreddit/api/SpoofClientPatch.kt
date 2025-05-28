@@ -26,11 +26,11 @@ val spoofClientPatch = spoofClientPatch(redirectUri = "http://rubenmayayo.com") 
 
         // region Patch redirect URI.
 
-        redirectUriFingerprint.method.apply {
-            val redirectUriIndex = stringMatches!!.first().index
-            val register = getInstruction<OneRegisterInstruction>(redirectUriIndex).registerA
+        redirectUriFingerprint.let {
+            val redirectUriIndex = it.stringMatches!!.first().index
+            val register = it.method.getInstruction<OneRegisterInstruction>(redirectUriIndex).registerA
 
-            replaceInstruction(redirectUriIndex, "const-string v$register, \"http://127.0.0.1:8080\"")
+            it.method.replaceInstruction(redirectUriIndex, "const-string v$register, \"http://127.0.0.1:8080\"")
         }
 
         // endregion

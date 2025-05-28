@@ -14,3 +14,7 @@ internal val getClientIdFingerprint = fingerprint {
     }
 }
 
+internal val redirectUriFingerprint = fingerprint {
+    strings("http://rubenmayayo.com")
+}
+
