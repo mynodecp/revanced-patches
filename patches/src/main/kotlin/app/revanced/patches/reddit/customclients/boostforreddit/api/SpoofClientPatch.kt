@@ -24,6 +24,17 @@ val spoofClientPatch = spoofClientPatch(redirectUri = "http://rubenmayayo.com") 
 
         // endregion
 
+        // region Patch redirect URI.
+
+        redirectUriFingerprint.method.apply {
+            val redirectUriIndex = stringMatches!!.first().index
+            val register = getInstruction<OneRegisterInstruction>(redirectUriIndex).registerA
+
+            replaceInstruction(redirectUriIndex, "const-string v$register, \"http://127.0.0.1:8080\"")
+        }
+
+        // endregion
+
         // region Patch user agent.
 
         // Use a random user agent.
@@ -32,7 +43,7 @@ val spoofClientPatch = spoofClientPatch(redirectUri = "http://rubenmayayo.com") 
         buildUserAgentFingerprint.let {
             val userAgentTemplateIndex = it.stringMatches!!.first().index
             val register = it.method.getInstruction<OneRegisterInstruction>(userAgentTemplateIndex).registerA
-            
+
             it.method.replaceInstruction(userAgentTemplateIndex, "const-string v$register, \"$userAgent\"")
         }
 
